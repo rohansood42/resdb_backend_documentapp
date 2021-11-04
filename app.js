@@ -1,3 +1,6 @@
+require("dotenv").config();
+require("./config/database").connect();
+
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
@@ -5,9 +8,11 @@ var logger = require("morgan");
 var cors = require("cors");
 var http = require("http");
 var debug = require("debug");
+const auth = require("./middleware/auth");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
+var loginRouter = require("./routes/login");
 
 var app = express();
 
@@ -17,8 +22,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 
+app.use("/auth", loginRouter);
+app.use("/users", auth, usersRouter);
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
 
 var port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);

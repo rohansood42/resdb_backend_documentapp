@@ -49,7 +49,7 @@ router.post("/register", async (req, res) => {
     user.token = token;
 
     // return new user
-    return res.status(201).json(returnUser);
+    return res.status(201).json(user);
   } catch (err) {
     console.log(err);
     return res.status(500).json({ message: "Internal Server Error" });
@@ -67,7 +67,7 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "All input is required" });
     }
     // Validate if user exist in our database
-    var user = await User.findOne({ email });
+    var user = await User.findOne({ email }).lean();
 
     if (user && (await bcrypt.compare(password, user.password))) {
       // Create token
@@ -78,6 +78,9 @@ router.post("/login", async (req, res) => {
 
       // save user token
       user.token = token;
+      delete user.password;
+      delete user.__v;
+
       return res.status(200).json(user);
     }
     return res.status(400).json({ message: "Invalid Credentials" });

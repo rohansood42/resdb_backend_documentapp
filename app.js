@@ -10,7 +10,7 @@ var http = require("http");
 var debug = require("debug");
 const auth = require("./middleware/auth");
 
-var indexRouter = require("./routes/index");
+var documentRouter = require("./routes/documentRoute");
 var usersRouter = require("./routes/users");
 var loginRouter = require("./routes/login");
 
@@ -24,7 +24,7 @@ app.use(cors());
 
 app.use("/auth", loginRouter);
 app.use("/users", auth, usersRouter);
-app.use("/", indexRouter);
+app.use("/document", auth, documentRouter);
 
 var port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);

@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+var Document = require("../model/document");
 const { MONGO_URI } = process.env;
 
 exports.connect = () => {
@@ -9,7 +9,7 @@ exports.connect = () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
-    .then(() => {
+    .then(async () => {
       console.log("Successfully connected to database");
     })
     .catch((error) => {

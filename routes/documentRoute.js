@@ -110,11 +110,9 @@ router.get("/download", async function (req, res) {
   res.download(file.document_location);
 });
 
-router.get("/:userId", async function (req, res) {
-  let userId = req.params.userId;
-
+router.get("/user", async function (req, res) {
   const documents = await Document.findOne({
-    associated_users: userId,
+    associated_users: req.user.user_id,
   });
 
   return res.status(200).json(documents);

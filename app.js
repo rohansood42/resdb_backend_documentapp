@@ -21,12 +21,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
+app.options("*", cors());
 
 app.use("/auth", loginRouter);
 app.use("/users", auth, usersRouter);
 app.use("/document", auth, documentRouter);
 
-var port = normalizePort(process.env.PORT || "3000");
+var port = normalizePort(process.env.PORT || "3001");
 app.set("port", port);
 
 var server = http.createServer(app);

@@ -8,6 +8,8 @@ const documentSchema = new mongoose.Schema({
   transaction_history: [
     { type: mongoose.Schema.Types.ObjectId, ref: "Transaction" },
   ],
+  status: { type: String },
+  approved_by: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
 });
 
 module.exports = mongoose.model("Document", documentSchema);

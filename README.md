@@ -83,3 +83,20 @@ Request Body -
 GET - `/document/download?id=""` - Download a particular file
 
 GET - `/document/user` - Get all the documents for a particular user
+
+POST - `/document/verify` - Get all the documents for a particular user
+
+```
+{
+"_id": String,
+"document_hash": String,
+}
+```
+
+POST - `/document/approve` - Get all the documents for a particular user
+
+```
+{
+"_id": String,
+}
+```

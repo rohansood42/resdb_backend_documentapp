@@ -82,9 +82,9 @@ Request Body -
 
 GET - `/document/download?id=""` - Download a particular file
 
-GET - `/document/user` - Get all the documents for a particular user
+GET - `/document/user?type=` - Get all the documents for a particular user pass [Confirmed] or [Pending] to get pending or transactions
 
-POST - `/document/verify` - Get all the documents for a particular user
+POST - `/document/verify` - Verify a document with a particular fileid
 
 ```
 {
@@ -93,7 +93,7 @@ POST - `/document/verify` - Get all the documents for a particular user
 }
 ```
 
-POST - `/document/approve` - Get all the documents for a particular user
+POST - `/document/approve` - A particular user approves all the changes in the document
 
 ```
 {

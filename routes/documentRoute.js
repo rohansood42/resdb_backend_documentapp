@@ -162,7 +162,9 @@ router.get("/download", async function (req, res) {
 });
 
 router.get("/user", async function (req, res) {
+  let key = req.query.type;
   const documents = await Document.find({
+    status: key,
     associated_users: req.user.user_id,
   })
     .populate("associated_users transaction_history approved_by")

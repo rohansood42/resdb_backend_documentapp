@@ -101,4 +101,12 @@ POST - `/document/approve` - A particular user approves all the changes in the d
 }
 ```
 
+POST - `/document/reject` - A particular user rejects all the changes in the document
+
+```
+{
+"_id": String,
+}
+```
+
 GET - `/document/delete?id=""` - Delete a particular file

@@ -234,4 +234,13 @@ router.post("/reject", async function (req, res) {
   return res.status(200).json({ document: doc });
 });
 
+router.get("/delete", async function (req, res) {
+  let fileId = req.query.id;
+
+  let file = await Document.findByIdAndRemove(fileId);
+  return res.status(200).json({
+    message: "File Deleted Successfully",
+  });
+});
+
 module.exports = router;

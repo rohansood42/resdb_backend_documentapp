@@ -176,16 +176,6 @@ router.get("/user", async function (req, res) {
   return res.status(200).json(documents);
 });
 
-router.post("/verify", async function (req, res) {
-  let { _id, document_hash } = req.body;
-
-  let file = await Document.findById(_id);
-
-  let verified = file.document_hash === document_hash;
-
-  return res.status(200).json({ isVerified: verified });
-});
-
 router.post("/approve", async function (req, res) {
   let { _id } = req.body;
 
@@ -195,7 +185,7 @@ router.post("/approve", async function (req, res) {
 
   let nTransaction = await Transaction.create({
     status: "Confirmed",
-    action: "Approve by user " + req.user.user_id,
+    action: "Approved by user " + req.user.user_id,
     performed_by: req.user.user_id,
   });
 
@@ -212,6 +202,29 @@ router.post("/approve", async function (req, res) {
         ? []
         : file.approved_by,
     transaction_history: file.transaction_history,
+  };
+
+  let doc = await Document.findOneAndUpdate(filter, update, {
+    new: true,
+  });
+
+  return res.status(200).json({ document: doc });
+});
+
+router.post("/reject", async function (req, res) {
+  let { _id } = req.body;
+
+  let nTransaction = await Transaction.create({
+    status: "Confirmed",
+    action: "Rejected by user " + req.user.user_id,
+    performed_by: req.user.user_id,
+  });
+
+  file.transaction_history.push(nTransaction);
+
+  const filter = { _id: _id };
+  const update = {
+    status: "Rejected",
   };
 
   let doc = await Document.findOneAndUpdate(filter, update, {
